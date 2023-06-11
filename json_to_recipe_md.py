@@ -136,15 +136,13 @@ collection: recipes
 categories:
   - Recipes
 tags:
-  - {style["name"].lower()}
-  - {int(style["categoryNumber"])}{style["styleLetter"]}
-{to_tags(data["searchTags"])}
+  - {style["name"]}
 ---
 
 {data['teaser']}
 
 **Name**: {data["name"]}<br />
-**Style**: {style["name"]} ({int(style["categoryNumber"])}{style["styleLetter"]})
+**Style**: {style["name"]} ({int(style["categoryNumber"])}{style["styleLetter"]})<br />
 **Type**: {data["type"]}
 
 ## Recipe Specifications
