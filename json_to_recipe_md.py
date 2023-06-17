@@ -118,6 +118,13 @@ def get_batch_notes_as_md(data: dict[str, Any]) -> str:
     return notes
 
 
+def get_brewfather_url(data: dict[str, Any]) -> str:
+    """Returns the brewfather shareable url if one is set."""
+    if share_id := data.get("_share"):
+        return f"Brewfather: [https://web.brewfather.app/share/{share_id}](https://web.brewfather.app/share/{share_id})"
+    return ""
+
+
 def main(
     json_file_path: str = typer.Argument(..., help="Path to exported json file.")
 ) -> None:
@@ -129,6 +136,7 @@ def main(
     mash_steps = get_mash_step_rows_as_md(data["data"], data["mash"]["steps"][0])
     batch_data = get_batch_data(get_batch_id(data["name"]))
     notes = get_batch_notes_as_md(batch_data)
+    brewfather_url = get_brewfather_url(data)
     md = f"""
 ---
 title: "{data["name"]} ({style["name"]} | {int(style["categoryNumber"])}{style["styleLetter"]})"
@@ -174,9 +182,17 @@ tags:
 ## Notes
 
 {notes}
+
+{brewfather_url}
     """
     typer.echo(md)
 
 
 if __name__ == "__main__":
     typer.run(main)
+    # import pprint
+
+    # r = send_brewfather_request(
+    #    "https://api.brewfather.app/v2/recipes/ImPH27WPzvXnlR6QqNtQK6FwNsVhj9"
+    # )
+    # pprint.pprint(r)
