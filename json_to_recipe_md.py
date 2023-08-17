@@ -147,7 +147,7 @@ tags:
   - {style["name"]}
 ---
 
-{data['teaser']}
+{data.get('teaser', '')}
 
 **Name**: {data["name"]}<br />
 **Style**: {style["name"]} ({int(style["categoryNumber"])}{style["styleLetter"]})<br />
