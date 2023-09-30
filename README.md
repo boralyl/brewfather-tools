@@ -6,7 +6,7 @@ from json for threegodsbrewing.com.
 ## Running
 
 1. Mark recipe as public in brew father.
-2. On the Batch details export as "Brewfather Batch JSON"
+2. On the Recipie details export as "Brewfather Recipe JSON"
 3. Run the following:
 
 ```bash
