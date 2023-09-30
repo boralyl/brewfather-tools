@@ -79,7 +79,7 @@ def get_ingredients_rows_as_md(data: dict[str, Any]) -> str:
 
     for m in data["miscs"]:
         amount = f"{m['amount']} {m['unit']}"
-        name = f"{m['name']} ({m['use']}{' ' + m['time'] if m['time'] else ''})"
+        name = f"{m['name']} ({m['use']}{' ' + str(m['time']) if m['time'] else ''})"
         ingredient_type = m["type"]
         ingredient_rows.append(f"|{amount}|{name}|{ingredient_type}|-|")
 
