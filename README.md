@@ -5,7 +5,7 @@ from json for threegodsbrewing.com.
 
 ## Running
 
-1. Mark recipe as public in brew father.
+1. Mark recipe as public in brew father. (Note: this may require uploading a photo, adding a teaser, notes and tags.)
 2. On the Recipie details export as "Brewfather Recipe JSON"
 3. Run the following:
 
