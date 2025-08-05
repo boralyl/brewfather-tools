@@ -8,14 +8,15 @@ from dotenv import dotenv_values
 from requests.auth import HTTPBasicAuth
 
 
-def send_brewfather_request(url: str):
+def send_brewfather_request(url: str, params: dict[str, str] | None = None):
+    params = params or {}
     config = dotenv_values(".env")
     auth = HTTPBasicAuth(config["BREWFATHER_USERNAME"], config["BREWFATHER_API_KEY"])
-    return requests.get(url, auth=auth).json()
+    return requests.get(url, auth=auth, params=params).json()
 
 
 def get_batch_id(recipe_name: str) -> str:
-    for batch in send_brewfather_request("https://api.brewfather.app/v2/batches/"):
+    for batch in send_brewfather_request("https://api.brewfather.app/v2/batches/", params={"order_by": "batchNo", "order_by_direction": "desc"}):
         if batch["recipe"]["name"] == recipe_name:
             return batch["_id"]
     raise ValueError(f"Couldn't find batch for {recipe_name}")
@@ -139,7 +140,7 @@ def main(
     brewfather_url = get_brewfather_url(data)
     md = f"""
 ---
-title: "{data["name"]} ({style["name"]} | {int(style["categoryNumber"])}{style["styleLetter"]})"
+title: "{data["name"]} ({style["name"]} | {style["categoryNumber"]}{style["styleLetter"]})"
 collection: recipes
 categories:
   - Recipes
@@ -150,7 +151,7 @@ tags:
 {data.get('teaser', '')}
 
 **Name**: {data["name"]}<br />
-**Style**: {style["name"]} ({int(style["categoryNumber"])}{style["styleLetter"]})<br />
+**Style**: {style["name"]} ({style["categoryNumber"]}{style["styleLetter"]})<br />
 **Type**: {data["type"]}
 
 ## Recipe Specifications
