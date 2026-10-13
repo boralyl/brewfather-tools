@@ -16,7 +16,10 @@ def send_brewfather_request(url: str, params: dict[str, str] | None = None):
 
 
 def get_batch_id(recipe_name: str) -> str:
-    for batch in send_brewfather_request("https://api.brewfather.app/v2/batches/", params={"order_by": "batchNo", "order_by_direction": "desc"}):
+    for batch in send_brewfather_request(
+        "https://api.brewfather.app/v2/batches/",
+        params={"order_by": "batchNo", "order_by_direction": "desc"},
+    ):
         if batch["recipe"]["name"] == recipe_name:
             return batch["_id"]
     raise ValueError(f"Couldn't find batch for {recipe_name}")
@@ -127,7 +130,7 @@ def get_brewfather_url(data: dict[str, Any]) -> str:
 
 
 def main(
-    json_file_path: str = typer.Argument(..., help="Path to exported json file.")
+    json_file_path: str = typer.Argument(..., help="Path to exported json file."),
 ) -> None:
     """Outputs markdown from a brewfather exported json file."""
     with open(json_file_path) as fp:
@@ -148,7 +151,7 @@ tags:
   - {style["name"]}
 ---
 
-{data.get('teaser', '')}
+{data.get("teaser", "")}
 
 **Name**: {data["name"]}<br />
 **Style**: {style["name"]} ({style["categoryNumber"]}{style["styleLetter"]})<br />
@@ -174,7 +177,7 @@ tags:
 
 ## Mash
 
-**Mash Schedule**: {data['mash']['name']}
+**Mash Schedule**: {data["mash"]["name"]}
 
 |Name|Description|Step Temperature|Step Time|
 |-|-|-|-|

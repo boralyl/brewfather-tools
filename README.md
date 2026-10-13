@@ -3,6 +3,14 @@
 A set of scripts for interacting with Brewfather. Mostly for creating recipie pages
 from json for threegodsbrewing.com.
 
+## Setup
+
+Dependencies are managed with [uv](https://docs.astral.sh/uv/):
+
+```bash
+$ uv sync
+```
+
 ## Running
 
 1. Mark recipe as public in brew father. (Note: this may require uploading a photo, adding a teaser, notes and tags.)
@@ -10,7 +18,7 @@ from json for threegodsbrewing.com.
 3. Run the following:
 
 ```bash
-$ python json_to_recipe_md.py /path/to/Brewfather_RECIPE_ChasingComets2_20230930.json
+$ uv run json_to_recipe_md.py /path/to/Brewfather_RECIPE_ChasingComets2_20230930.json
 
 ---
 title: "Chasing Comets 2 (American IPA | 21A)"
