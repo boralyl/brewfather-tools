@@ -108,6 +108,16 @@ def get_mash_step_rows_as_md(data: dict[str, Any], mash_step: dict[str, Any]) ->
     return "\n".join(mash_step_rows)
 
 
+def get_fermentation_steps_as_md(fermentation: dict[str, Any]) -> str:
+    """Creates a list of fermentation steps as markdown."""
+    fermentation_steps: list[str] = []
+    for step in fermentation["steps"]:
+        temp = round(celcius_to_fahrenheit(step["stepTemp"]))
+        days = f"{step['stepTime']} {'day' if step['stepTime'] == 1 else 'days'}"
+        fermentation_steps.append(f"* {step['type']} - {temp}F ({days})")
+    return "\n".join(fermentation_steps)
+
+
 def get_batch_notes_as_md(data: dict[str, Any]) -> str:
     """Returns batch notes as markdown."""
     data["notes"].reverse()
@@ -138,6 +148,7 @@ def main(
     style = data["style"]
     ingredients = get_ingredients_rows_as_md(data)
     mash_steps = get_mash_step_rows_as_md(data["data"], data["mash"]["steps"][0])
+    fermentation_steps = get_fermentation_steps_as_md(data["fermentation"])
     batch_data = get_batch_data(get_batch_id(data["name"]))
     notes = get_batch_notes_as_md(batch_data)
     brewfather_url = get_brewfather_url(data)
@@ -182,6 +193,10 @@ tags:
 |Name|Description|Step Temperature|Step Time|
 |-|-|-|-|
 {mash_steps}
+
+## Fermentation Profile
+
+{fermentation_steps}
 
 ## Notes
 
